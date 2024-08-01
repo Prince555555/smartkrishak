@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Prediction</title>
+    <link rel="stylesheet" href="../Styles/crop.css">
+</head>
+<body>
+    <header>
+        <h1>Crop Prediction</h1>
+    </header>
+    <main>
+        <section>
+            <form id="predictionForm" method="POST">
+                <article>
+                    <label for="nitrogen">Nitrogen:</label>
+                    <input type="number" id="nitrogen" name="nitrogen">
+                </article>
+                <article>
+                    <label for="phosphorus">Phosphorus:</label>
+                    <input type="number" id="phosphorus" name="phosphorus">
+                </article>
+                <article>
+                    <label for="potassium">Potassium:</label>
+                    <input type="number" id="potassium" name="potassium">
+                </article>
+                <article>
+                    <label for="temperature">Temperature:</label>
+                    <input type="number" id="temperature" name="temperature">
+                </article>
+                <article>
+                    <label for="humidity">Humidity:</label>
+                    <input type="number" id="humidity" name="humidity">
+                </article>
+                <article>
+                    <label for="ph">PH:</label>
+                    <input type="number" id="ph" name="ph">
+                </article>
+                <article>
+                    <label for="Rainfall">Rainfall:</label>
+                    <input type="number" id="rainfall" name="rainfall">
+                </article>
+                <article>
+                    <input type="submit" value="Predict" onclick="predictCrop()">
+                </article>
+                </form>
+        </section>
+        <P id="result"></P>
+    </main>
+    <script>
+ function predictCrop() {
+            const nitrogen = document.getElementById("nitrogen").value;
+            const phosphorus = document.getElementById("phosphorus").value;
+            const potassium = document.getElementById("potassium").value;
+            const temperature = document.getElementById("temperature").value;
+            const humidity = document.getElementById("humidity").value;
+            const ph = document.getElementById("ph").value;
+            const rainfall = document.getElementById("rainfall").value
+            const inputData = {
+                "nitrogen": parseInt(nitrogen),
+                "phosphorus": parseInt(phosphorus),
+                "potassium": parseInt(potassium),
+                "temperature": parseInt(temperature),
+                "humidity": parseInt(humidity),
+                "ph": parseInt(ph),
+                "rainfall": parseInt(rainfall)
+            };
+
+            fetch("/crop", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(inputData),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                const predictionResult = document.getElementById("result");
+                predictionResult.innerHTML = "Prediction Result:"+ data.prediction;
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+        }
+    </script>
+    </script>
+</body>
+</html>

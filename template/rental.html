@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Farm Equipment Rental</title>
+</head>
+<body>
+    <h1>Farm Equipment Rental</h1>
+    
+    <!-- Add a form to add equipment -->
+    <form method="POST" action="/add_equipment">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label for="contact">Contact:</label>
+        <input type="number" id="contact" name="contact" required>
+        <br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea>
+        <br>
+        <button type="submit">Add Equipment</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for equipment in equipment_list %}
+                <tr>
+                    <td>{{ equipment.name }}</td>
+                    <td>{{ equipment.contact}}</td>
+                    <td>{{ equipment.description }}</td>
+                    <td>{{ "Available" if equipment.available else "Rented" }}</td>
+                    <td>
+                        {% if equipment.available %}
+                            <a href="/rent/{{ equipment.id }}">Rent</a>
+                        {% else %}
+                            <a href="/hire/{{ equipment.id }}">Hire</a>
+                        {% endif %}
+                        <!-- Add a delete button for each equipment -->
+                        <a href="/delete_equipment/{{ equipment.id }}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

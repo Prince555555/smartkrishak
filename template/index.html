@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Current Weather</h1>
+    {% if weather_data %}
+        <p>City: {{ weather_data.location.name }}</p>
+        <p>Temperature: {{ weather_data.current.temp_c }}°C</p>
+        <p>Description: {{ weather_data.current.condition.text }}</p>
+        <img src="{{ weather_data.current.condition.icon }}" alt="Weather Icon">
+    {% else %}
+        <p>Weather data is not available at the moment.</p>
+    {% endif %}
+    
+</body>
+</html>
